@@ -68,6 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="all_objects.sql" />
+    <Content Include="all_tables_sps_in_ProductWEB.sql" />
     <Content Include="CrudService.asmx" />
     <Content Include="crud_ajax.aspx" />
     <Content Include="UploadService.asmx" />
@@ -89,7 +91,6 @@
     <Compile Include="ListtoDataTableConverter.cs" />
     <Compile Include="Models\OnlyProduct.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductWithId.cs" />
     <Compile Include="ProductsDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UploadService.asmx.cs">

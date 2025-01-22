@@ -54,11 +54,12 @@ namespace ProductsWeb
                 product.Code = dtrow["Code"].ToString();
                 product.Name = dtrow["Name"].ToString();
                 product.Description = dtrow["Description"].ToString();
-                
-                DateTime sellDate = DateTime.ParseExact(dtrow["SellDate"].ToString(), "dd-M-yyyy", CultureInfo.InvariantCulture);
-                product.SellDate = sellDate;
 
-                product.ImageLink = dtrow["ImageLink"].ToString();
+                DateTime dtOut = DateTime.MinValue;
+                DateTime.TryParse(dtrow["SellDate"].ToString(), out dtOut);
+                product.SellDate = dtOut;
+
+                product.ImageLink = dtrow["ImageLink"] == null ? dtrow["ImageLink"].ToString() : "";
                 details.Add(product);
             }
              return details.ToArray();
@@ -82,10 +83,14 @@ namespace ProductsWeb
                     b.Name = dr["Name"].ToString();
                     b.Description = dr["Description"].ToString();
 
-                    DateTime sellDate = DateTime.ParseExact(dr["SellDate"].ToString(), "dd-M-yyyy", CultureInfo.InvariantCulture);
-                    b.SellDate = sellDate;
+                    DateTime dtOut = DateTime.MinValue;
+                    DateTime.TryParse(dr["SellDate"].ToString(), out dtOut);
+                    b.SellDate = dtOut;
 
-                    b.ImageLink = dr["ImageLink"].ToString();
+                    //DateTime sellDate = DateTime.ParseExact(dr["SellDate"].ToString(), "MM-dd-yyyy", CultureInfo.InvariantCulture);
+                    //b.SellDate = sellDate;
+
+                    b.ImageLink = dr["ImageLink"] == null ? dr["ImageLink"].ToString() : "";
                     return b;
                 }
                 else
@@ -123,10 +128,14 @@ namespace ProductsWeb
                         b.Name = dr["Name"].ToString();
                         b.Description = dr["Description"].ToString();
 
-                        DateTime dt = DateTime.ParseExact(dr["SellDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                        b.SellDate = dt;                                               
+                        DateTime dtOut = DateTime.MinValue;
+                        DateTime.TryParse(dr["SellDate"].ToString(), out dtOut);
+                        b.SellDate = dtOut;
 
-                        b.ImageLink = dr["ImageLink"].ToString();
+                        //DateTime dt = DateTime.ParseExact(dr["SellDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                        //b.SellDate = dt;                                               
+
+                        b.ImageLink = dr["ImageLink"] == null ? dr["ImageLink"].ToString() : "";
                         products.Add(b);
                     }
 
@@ -196,7 +205,7 @@ namespace ProductsWeb
                 con.Close();
             }
         }
-        public static string UpdateProductWithId(ProductWithId objProduct)
+        public static string UpdateProductWithId(Product objProduct)
         {
             SqlConnection con = new SqlConnection(Database.ConnectionString);
             try
@@ -208,10 +217,7 @@ namespace ProductsWeb
                 cmd.Parameters.AddWithValue("@Code", objProduct.Code);
                 cmd.Parameters.AddWithValue("@Name", objProduct.Name);
                 cmd.Parameters.AddWithValue("@Description", objProduct.Description);
-
-                DateTime dt = DateTime.ParseExact(objProduct.SellDate, "dd-M-yyyy", CultureInfo.InvariantCulture);
-                cmd.Parameters.AddWithValue("@SellDate", dt);
-
+                cmd.Parameters.AddWithValue("@SellDate", objProduct.SellDate);
                 cmd.Parameters.AddWithValue("@ImageLink", objProduct.ImageLink);
                 cmd.ExecuteNonQuery();
                 return null; // success 

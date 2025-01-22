@@ -114,7 +114,7 @@
                 <asp:BoundField DataField="Code" HeaderText="Code" SortExpression="Code" />
                 <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                 <asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description" />
-                <asp:BoundField DataField="SellDate" HeaderText="SellDate" SortExpression="SellDate" DataFormatString="{0:dd-M-yyyy}" />
+                <asp:BoundField DataField="SellDate" HeaderText="SellDate" SortExpression="SellDate" DataFormatString="{0:MM-dd-yyyy}" />
 
 <%--                <asp:TemplateField HeaderText="SellDate" SortExpression="SellDate">    
                 <ItemTemplate>    
@@ -207,8 +207,7 @@
             function populateGrid(data) {
                 $("[id*=gvProducts] tr").not($("[id*=gvProducts] tr:first-child")).remove();
                 for (var i = 0; i < data.d.length; i++) {
-                    //var SellDate = moment(data.d[i].SellDate, 'DD-M-YYYY').toDate();
-                    var SellDate = moment(data.d[i].SellDate).format('DD-MM-YYYY');
+                    var SellDate = moment(data.d[i].SellDate).format('MM-DD-YYYY');
                     $("#gvProducts").append("<tr><td>" + "&nbsp;" + "</td><td>" + data.d[i].ProductId + "</td><td>" + data.d[i].Code + "</td><td>" + data.d[i].Name + "</td><td>" + data.d[i].Description + "</td><td>" + SellDate + "</td><td>" + data.d[i].ImageLink + "</td></tr>");
                 }
             }
@@ -216,12 +215,13 @@
             function populateSearchGrid(data) {
                 $("[id*=gvProducts] tr").not($("[id*=gvProducts] tr:first-child")).remove();
                 for (var i = 0; i < data.d.length; i++) {
-                    var SellDate = moment(data.d[i].SellDate).format('DD-MM-YYYY');
+                    var SellDate = moment(data.d[i].SellDate).format('MM-DD-YYYY');
                     $("#gvProducts").append("<tr><td>" + "&nbsp;" + "</td><td>" + data.d[i].ProductId + "</td><td>" + data.d[i].Code + "</td><td>" + data.d[i].Name + "</td><td>" + data.d[i].Description + "</td><td>" + SellDate + "</td><td>" + data.d[i].ImageLink + "</td></tr>");
                 }
             }
 
-             $("#btnSave").click(function () {
+            $("#btnSave").click(function () {
+                 debugger
                  var product = {};
                  product.code = $("#txtCode").val();
                  product.name = $("#txtName").val();
@@ -246,6 +246,7 @@
              });
 
             $("#btnUpdate").click(function () {
+                debugger
                 var product = {};
                 product.productId = parseInt($("#txtID").val());
                 product.code = $("#txtCode").val();

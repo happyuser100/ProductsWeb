@@ -43,16 +43,16 @@ namespace ProductsWeb
         [ScriptMethod]
         public string SaveProduct(OnlyProduct objProduct)
         {
-            objProduct.ImageLink = Session["fileName"].ToString();
+            objProduct.ImageLink = (Session["fileName"] == null) ? "" : Session["fileName"].ToString();
             ProductsDAL.SaveProduct(objProduct);
             return "";
         }
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
-        public string UpdateProductWithId(ProductWithId objProduct)
+        public string UpdateProductWithId(Product objProduct)
         {
-            objProduct.ImageLink = Session["fileName"].ToString();
+            objProduct.ImageLink = (Session["fileName"] == null) ? "":  Session["fileName"].ToString();
             ProductsDAL.UpdateProductWithId(objProduct);
             return "";
         }
